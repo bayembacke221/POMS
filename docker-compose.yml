@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_server
+    user: '0:0'
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=mbacke@221
+      - MSSQL_PID=Express
+      - TZ=Europe/Paris
+      - MSSQL_COLLATION=French_CI_AS
+      - MSSQL_MEMORY_LIMIT_MB=2048
+      - MSSQL_TCP_PORT=1433
+      - MSSQL_IP_ADDRESS=0.0.0.0
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - mssql_logs:/var/opt/mssql/log
+      - mssql_secrets:/var/opt/mssql/secrets
+    networks:
+      - mssql_network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+    command:
+      - /opt/mssql/bin/sqlservr
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourStrong@Password123" -Q "SELECT 1" || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  mssql_data:
+    driver: local
+  mssql_logs:
+    driver: local
+  mssql_secrets:
+    driver: local
+
+networks:
+  mssql_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.200.0/24
