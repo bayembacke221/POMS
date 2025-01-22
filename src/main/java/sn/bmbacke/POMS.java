@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import sn.bmbacke.repository.EmployeeRepository;
 
 @SpringBootApplication
-public class DemoMssqlServerApplication  implements CommandLineRunner {
+public class POMS  implements CommandLineRunner {
     @Autowired private  EmployeeRepository  employeeRepository;
     public static void main(String[] args) {
-        SpringApplication.run(DemoMssqlServerApplication.class, args);
+        SpringApplication.run(POMS.class, args);
     }
 
     @Override
