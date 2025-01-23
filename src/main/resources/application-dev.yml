@@ -1,0 +1,43 @@
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=northwind;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: mbacke@221
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  hikari:
+    pool-name: Northwind-Pool
+    maximum-pool-size: 10
+    minimum-idle: 5
+  jpa:
+    hibernate:
+      ddl-auto: none  # Ne pas cr�er/modifier les tables
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: dbo
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9098/realms/northwinds
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+
+app:
+  keycloak:
+    admin:
+      clientId: northwind-app
+      clientSecret: 0t85DKvV1g8glbPXEzzWS6LrZRi3YlqG
+    realm: northwind
+    serverUrl: http://localhost:9098
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.keycloak: DEBUG
+server:
+  port: 8088
