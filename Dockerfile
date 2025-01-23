@@ -1,5 +1,5 @@
 #Image de base
-FROM openjdk:24-ea-21-slim-bookworm
+FROM openjdk:17-alpine
 LABEL maintainer="mbackembaye74@gmail.com"
 VOLUME /main-app
 ADD target/demo-mssql-server-0.0.1-SNAPSHOT.jar app.jar
