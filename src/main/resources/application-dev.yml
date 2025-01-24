@@ -1,5 +1,20 @@
 
 spring:
+  mail:
+    host: localhost
+    port: 1025
+    username: northwind@gmail.com
+    password: northwind@2021
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=northwind;encrypt=true;trustServerCertificate=true
     username: sa
