@@ -19,6 +19,8 @@ import sn.bmbacke.payload.request.UpdateProductRequest;
 import sn.bmbacke.repository.CategoryRepository;
 import sn.bmbacke.repository.ProductRepository;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -125,5 +127,10 @@ public class ProductService {
                 request.getName(), request.getCategoryId(), id)) {
             throw new ApiException("Product with this name already exists in the category");
         }
+    }
+
+    public List<ProductDTO> getLowStockProducts() {
+        List<Product> products = productRepository.findLowStockProducts();
+        return productMapper.toDtoList(products);
     }
 }

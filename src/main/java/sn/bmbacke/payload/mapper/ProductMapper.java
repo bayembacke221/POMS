@@ -5,6 +5,7 @@ import sn.bmbacke.models.Product;
 import sn.bmbacke.payload.dto.ProductDTO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 public class ProductMapper {
@@ -23,5 +24,11 @@ public class ProductMapper {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
+    }
+
+    public List<ProductDTO> toDtoList(List<Product> products) {
+        return products.stream()
+                .map(this::toDto)
+                .toList();
     }
 }
